@@ -28,19 +28,49 @@
 <body>
     <div id="game">
         <canvas id="canvas" width="400" height="400">
-        <div>The browser does not support this game</div>
-    </canvas>
+            <div>The browser does not support this game</div>
+        </canvas>
     </div>
     
     <script>
+        //
+        // Constants -------------------------------------------------------------------------
+
         const ctx = document.getElementById('canvas').getContext('2d');
+
+        const scale = { x: 20, y: 20 };
+
+        //
+        // Initialize variables to keep track of the game state ------------------------------
+
+        let snake = [           // array that holds the cells of the snake's body
+            { x: 10, y: 10 },
+            { x: 10, y: 11 },
+            { x: 10, y: 12 },
+            { x: 10, y: 13 },
+            { x: 10, y: 14 }
+        ]
+
+        //
+        // functions to render the snake -----------------------------------------------------
+
+        const renderSingle = (pos, color) => {
+            ctx.fillStyle = color;
+            ctx.fillRect(pos.x * scale.x, pos.y * scale.y, scale.x, scale.y);
+        }
+
+        const renderWholeSnake = () => {
+            snake.forEach(e => renderSingle(e, 'lightgreen'))
+        }
+
+        //
+        // Actually start the game -----------------------------------------------------------
+
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, 400, 400);
 
-        // // test canvas
-        // ctx.moveTo(10, 10);
-        // ctx.lineTo(300, 350);
-        // ctx.stroke();
+        renderWholeSnake()
+
     </script>
 </body>
 </html>
