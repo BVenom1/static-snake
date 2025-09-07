@@ -9,6 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Keania+One&display=swap" rel="stylesheet">
 
+    <svg style="position: absolute; width: 0; height: 0;">
+        <filter id="roundCorners">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 19 -9" result="goo" />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+        </filter>
+    </svg>
 
     <style>
         body {
@@ -24,7 +31,7 @@
 
         #game {
             padding: 20px;
-            border: 2px solid white;
+            border: 2px solid aliceblue;
             border-radius: 10px;
         }
 
@@ -38,6 +45,107 @@
             font-style: normal;
             color: white;
         }
+
+        #control {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #movement {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #right-left {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+        }
+
+        #quality {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .v {
+            width: 80px;
+            height: 100px;
+            flex-direction: column;
+        }
+
+        .h {
+            width: 100px;
+            height: 80px;
+            flex-direction: row;
+        }
+
+        .b {
+            background-color: aliceblue;
+            border-radius: 10px;
+            border: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .b:active {
+            background-color: rgb(148, 163, 177);
+        }
+
+        #up {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 50% 100%, 0% 60%);
+            margin-bottom: -30px;
+            justify-content: flex-start;
+        }
+
+        #left {
+            clip-path: polygon(0% 0%, 60% 0%, 100% 50%, 60% 100%, 0% 100%);
+            margin-right: -30px;
+            justify-content: flex-start;
+        }
+
+        #right {
+            clip-path: polygon(0% 50%, 40% 0%, 100% 0%, 100% 100%, 40% 100%);
+            margin-left: -30px;
+            justify-content: flex-end;
+        }
+
+        #down {
+            clip-path: polygon(50% 0%, 100% 40%, 100% 100%, 0% 100%, 0% 40%);
+            margin-top: -30px;
+            justify-content: flex-end;
+        }
+
+        .a {
+            width: 40px;
+            height: 40px;
+            background-color: rgb(37, 37, 40);
+            margin: 10px;
+        }
+
+        #upArrow {
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+        }
+
+        #leftArrow {
+            clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+        }
+
+        #rightArrow {
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+        }
+
+        #downArrow {
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+        }
     </style>
 
 </head>
@@ -47,6 +155,20 @@
             <div>The browser does not support this game</div>
         </canvas>
         <div id="score">Score: <div id="scoreNum">0</div></div>
+        <div id="control">
+            <div id="movement">
+                <div class="v b" id="up"><div class="a" id="upArrow"></div></div>
+                <div id="right-left">
+                    <div class="h b" id="left"><div class="a" id="leftArrow"></div></div>
+                    <div class="h b" id="right"><div class="a" id="rightArrow"></div></div>
+                </div>
+                <div class="v b" id="down"><div class="a" id="downArrow"></div></div>
+            </div>
+            <div id="quality">
+                <div class="h b" id="replay-stop"></div>
+                <div class="h b" id="pause-play"></div>
+            </div>
+        </div>
     </div>
     
     <script>
@@ -69,7 +191,7 @@
 
         // colors:
         const snakeColor = 'lightgreen'
-        const bgColor = 'white'
+        const bgColor = 'aliceblue'
         const fruitColor = 'orange'
 
         //
@@ -125,6 +247,7 @@
 
             // check if snake has eaten the fruit
             if (newHead.x === fruit.x && newHead.y === fruit.y) {
+                console.log('fruit has been eaten')
                 score = score + 1;
                 scoreNum.innerText = score;
                 makeFruit();
@@ -162,7 +285,7 @@
             scoreNum.innerText = 0;
 
             // clear the screen from previous game
-            ctx.fillStyle = 'white';
+            ctx.fillStyle = bgColor;
             ctx.fillRect(0, 0, scale.x * boardSize.x, scale.y * boardSize.y);
 
             renderWholeSnake() // render the whole snake at the start of the game
@@ -191,7 +314,7 @@
         //
         // Actually start the game -----------------------------------------------------------
 
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, scale.x * boardSize.x, scale.y * boardSize.y);
 
         document.addEventListener('keydown', handleKeyboardInput);
