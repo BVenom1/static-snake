@@ -26,7 +26,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            scale: 90%;
         }
 
         #game {
@@ -178,8 +179,14 @@
         const playBtn = document.getElementById('pause-play');
         playBtn.disabled = true;
 
+        // canvas scale and board size
         const scale = { x: 20, y: 20 };
         const boardSize = { x: 20, y: 20 };
+
+        // colors:
+        const snakeColor = 'lightgreen'
+        const bgColor = 'aliceblue'
+        const fruitColor = 'orange'
 
         // set size of canvas according to scale & boardSize
         canvas.width = scale.x * boardSize.x;
@@ -190,11 +197,6 @@
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, scale.x * boardSize.x, scale.y * boardSize.y);
-
-        // colors:
-        const snakeColor = 'lightgreen'
-        const bgColor = 'aliceblue'
-        const fruitColor = 'orange'
 
 
         // Initialize variables to keep track of the game state ------------------------------
