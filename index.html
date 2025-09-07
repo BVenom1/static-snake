@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STATIC SNAKE</title>
+
+    <style>
+        body {
+            background-color: rgb(37, 37, 40);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #game {
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="game">
+        <canvas id="canvas" width="400" height="400">
+        <div>The browser does not support this game</div>
+    </canvas>
+    </div>
+    
+    <script>
+        const ctx = document.getElementById('canvas').getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 400, 400);
+
+        // // test canvas
+        // ctx.moveTo(10, 10);
+        // ctx.lineTo(300, 350);
+        // ctx.stroke();
+    </script>
+</body>
+</html>
